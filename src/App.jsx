@@ -1,8 +1,5 @@
 import './App.css'
-import Lemon from './components/Lemon'
-import Balance from './components/Balance'
-import Booster from './components/Booster'
-import Header from './components/Header'
+import Clicker from './pages/Clicker'
 import { useState } from 'react'
 import Menu from './components/Menu'
 
@@ -22,12 +19,7 @@ function App() {
     return (
         <div className="root">
             <div className="root_content">
-                <div className="container clicker">
-                    <Header>lemon clicker</Header>
-                    <Balance total={stats.clicks} />
-                    <Lemon onClick={handleClick} />
-                    <Booster value={stats.increase} />
-                </div>
+                <Clicker stats={stats} handleClick={handleClick} />
             </div>
             <Menu items={stats.itemstobuy} />
         </div>
