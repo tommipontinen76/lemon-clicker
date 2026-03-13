@@ -8,10 +8,14 @@ import Menu from './components/Menu'
 
 
 function App() {
-    const [clicks, setClicks] = useState(0)
+    const [stats, setStats] = useState({clicks: 0, balance: 0, increase: 1, itemstobuy: 0})
     const handleClick = () => {
-        // Kasvatetaan napautusten määrää yhdellä.
-        setClicks(clicks + 1)
+        // Tehdään kopio stats-tilamuuttujasta.
+        let newstats = {...stats}
+        // Kasvatetaan napautusten lukumäärää yhdellä.
+        newstats.clicks = newstats.clicks + 1;
+        // Tallennetaan päivitetty stats-muuttuja.
+        setStats(newstats);
     }
 
 
@@ -20,14 +24,15 @@ function App() {
             <div className="root_content">
                 <div className="container clicker">
                     <Header>lemon clicker</Header>
-                    <Balance total={clicks}/>
-                    <Lemon onClick={handleClick}/>
-                    <Booster value="3.2"/>
+                    <Balance total={stats.clicks} />
+                    <Lemon onClick={handleClick} />
+                    <Booster value={stats.increase} />
                 </div>
             </div>
-            <Menu items={2} />
+            <Menu items={stats.itemstobuy} />
         </div>
     )
+
 }
 
 export default App
