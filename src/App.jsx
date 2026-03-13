@@ -1,5 +1,5 @@
 import './App.css'
-import Clicker from './pages/Clicker'
+import Clicker from './assets/pages/Clicker.jsx'
 import { useState } from 'react'
 import Menu from './components/Menu'
 
