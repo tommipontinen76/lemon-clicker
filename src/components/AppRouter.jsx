@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
-import Root from "./Root"
-import ErrorPage from '../assets/pages/ErrorPage'
-import Clicker from '../assets/pages/Clicker'
-import Store from '../assets/pages/Store'
-import Settings from '../assets/pages/Settings'
+import Root from "./Root.jsx"
+import ErrorPage from "../pages/ErrorPage.jsx"
+import Clicker from "../pages/Clicker.jsx"
+import Store from "../pages/Store.jsx"
+import Settings from "../pages/Settings.jsx"
 
 function AppRouter(props) {
     const router = createBrowserRouter([
@@ -17,6 +17,7 @@ function AppRouter(props) {
                 {path: "settings", element: <Settings stats={props.stats}/>},
             ]
         }
+    ])
 
     return (
         <RouterProvider router={router} />
