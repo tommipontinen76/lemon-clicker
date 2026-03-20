@@ -20,11 +20,31 @@ function App() {
         newstats.balance = newstats.balance + newstats.increase
     }
 
+    const handlePurchase = (id) => {
+        // Etsitään tunnistetta vastaavan tuotteen indeksi taulukosta.
+        const index = storeitems.findIndex(storeitem => storeitem.id == id)
+        // Varmistetaan, että käyttäjällä on varaa ostaa tuote.
+        if (stats.balance >= storeitems[index].price) {
+            // Tehdään kopiot tilamuuttujista.
+            let newstoreitems = [...storeitems]
+            let newstats = {...stats}
+            // Kasvatetaan tuotteiden määrää yhdellä.
+            newstoreitems[index].qty++
+            // Vähännetään varoista tuotteen hinta.
+            newstats.balance = newstats.balance - newstoreitems[index].price
+            // TODO Uusi tuotehinta
+            // Tallennetaan uudet tilamuuttujien arviot.
+            setStoreitems(newstoreitems)
+            setStats(newstats)
+        }
+    }
+
 
     return (
         <AppRouter stats={stats}
                    storeitems={storeitems}
-                   handleClick={handleClick} />
+                   handleClick={handleClick}
+                   handlePurchase={handlePurchase} />
     )
 
 
