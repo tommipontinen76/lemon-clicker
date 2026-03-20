@@ -6,9 +6,31 @@ import round from './utils/round'
 import getPurchasableItems from './utils/getPurchasableItems'
 
 function App() {
-    // Luodaan tilamuuttuja, johon tallennetaan tuotelista.
-    const [storeitems,setStoreitems] = useState(items)
-    const [stats, setStats] = useState({clicks: 0, balance: 0, increase: 1, itemstobuy: 0})
+    // Esitellään pelin laskennalliset alkuarvot.
+    const initialstats = {
+        clicks: 0,
+        balance: 0,
+        increase: 1,
+        itemstobuy: 0,
+        upgrades: 0,
+        collected: 0
+    }
+
+    // Luodaan tilamuuttuja, johon tallennetaan pelin laskennalliset tiedot.
+    const [stats, setStats] = useState(initialstats)
+
+    // Luodaan tilamuuttuja kaupan tuotteille.
+    const [storeitems, setStoreitems] = useState(items)
+
+    // Laskee niiden tuotteiden lukumäärän, joiden ostamiseen on varaa.
+    const countBuyableItems = (items, balance) => {
+        let total = 0
+        getPurchasableItems(items).forEach(item => {
+            if (item.price <= balance) total++
+        })
+        return total
+    }
+
     const handleClick = () => {
         // Tehdään kopio stats-tilamuuttujasta.
         let newstats = {...stats}
@@ -18,17 +40,10 @@ function App() {
         newstats.balance = round(newstats.balance + newstats.increase,1)
         // Lasketaan ostettavissa olevien tuotteiden lukumäärä.
         newstats.itemstobuy = countBuyableItems(storeitems,newstats.balance)
+        // Kasvatetaan kerättyjen sitruunoiden kokonausmäärää.
+        newstats.collected = round(newstats.collected + newstats.increase,1)
         // Tallennetaan päivitetty stats-muuttuja.
         setStats(newstats);
-        // Laskee niiden tuotteiden lukumäärän, joiden ostamiseen on varaa.
-        const countBuyableItems = (items, balance) => {
-            let total = 0
-            getPurchasableItems(items).forEach(item => {
-                if (item.price <= balance) total++
-            })
-            return total
-        }
-
     }
 
     const handlePurchase = (id) => {
