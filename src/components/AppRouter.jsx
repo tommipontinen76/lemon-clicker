@@ -8,14 +8,12 @@ import Settings from "../pages/Settings.jsx"
 function AppRouter(props) {
     const router = createBrowserRouter([
         {
-        { path: "store", element: <Store stats={props.stats}
-                                         storeitems={props.storeitems}
-                                         handlePurchase={props.handlePurchase} />},
-        element: <Root items={props.stats.itemstobuy}/>,
+            path: "/",
+            element: <Root items={props.stats.itemstobuy}/>,
             errorElement: <ErrorPage/>,
             children: [
                 {path: "", element: <Clicker stats={props.stats} handleClick={props.handleClick}/>},
-                { path: "store", element: <Store stats={props.stats} storeitems={props.storeitems} />},
+                {path: "store", element: <Store stats={props.stats} storeitems={props.storeitems} handlePurchase={props.handlePurchase} />},
                 {path: "settings", element: <Settings stats={props.stats}/>},
             ]
         }

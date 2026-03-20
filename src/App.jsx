@@ -2,8 +2,7 @@ import './App.css'
 import { useState } from 'react'
 import AppRouter from './components/AppRouter'
 import items from './config/items.js'
-
-
+import round from './utils/round'
 
 function App() {
     // Luodaan tilamuuttuja, johon tallennetaan tuotelista.
@@ -14,10 +13,10 @@ function App() {
         let newstats = {...stats}
         // Kasvatetaan napautusten lukumäärää yhdellä.
         newstats.clicks = newstats.clicks + 1;
+        // Kasvatetaan sitruunoiden määrää kasvatusarvolla.
+        newstats.balance = round(newstats.balance + newstats.increase,1)
         // Tallennetaan päivitetty stats-muuttuja.
         setStats(newstats);
-        // Kasvatetaan sitruunoiden määrää kasvatusarvolla.
-        newstats.balance = newstats.balance + newstats.increase
     }
 
     const handlePurchase = (id) => {
@@ -31,11 +30,23 @@ function App() {
             // Kasvatetaan tuotteiden määrää yhdellä.
             newstoreitems[index].qty++
             // Vähännetään varoista tuotteen hinta.
-            newstats.balance = newstats.balance - newstoreitems[index].price
+            newstats.balance = round(newstats.balance - newstoreitems[index].price,1)
             // Lasketaan tuotteen uusi hinta.
             newstoreitems[index].price =
                 Math.floor(newstoreitems[index].baseprice * Math.pow(1.15,newstoreitems[index].qty))
-            // TODO lasketaan uusi kasvatusarvo
+            // Koostemuuttujien esittely.
+            let increase = 1
+            let upgrades = 0
+            // Käydään kaupan tuotteet yksitellen lävitse.
+            for (let i=0; i<newstoreitems.length; i++) {
+                // Lisätään tuotteiden määrä kokonaismäärään.
+                upgrades = upgrades + newstoreitems[i].qty
+                // Lisätään tuotteen vaikutus kasvatusarvoon.
+                increase = increase + newstoreitems[i].multiplier*newstoreitems[i].qty
+            }
+            // Tallennetaan lasketut koostearvot.
+            newstats.increase = round(increase,1)
+            newstats.upgrades = upgrades
             // Tallennetaan uudet tilamuuttujien arviot.
             setStoreitems(newstoreitems)
             setStats(newstats)

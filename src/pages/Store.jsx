@@ -3,7 +3,6 @@ import Item from '../components/Item'
 
 function Store(props) {
     // Muodostetaan renderöitävä tuotelista.
-    // Muodostetaan renderöitävä tuotelista.
     const items = props.storeitems.map(item => (
         <Item key={item.id}
               item={item}
